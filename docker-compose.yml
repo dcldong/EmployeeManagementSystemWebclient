@@ -1,0 +1,9 @@
+version: "3.5"
+
+services:
+  employeesManagementWebClient:
+    build: .
+    image: nginx:employeesManagementSystem
+    container_name: employeesManagementWebClient
+    ports:
+      - "8088:80"
