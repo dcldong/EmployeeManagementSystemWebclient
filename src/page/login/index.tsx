@@ -4,6 +4,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import md5 from 'js-md5';
+import { handleError } from '../../utils';
 
 interface Props {
 }
@@ -23,7 +24,7 @@ const Login: React.FC<Props> = (props) => {
                         localStorage.setItem("permission", result.data.permission);
                         navigate('/employee', { replace: true })
                     }).catch(error => {
-                        alert(error.message);
+                        handleError(error);
                     })
                 });
             }}

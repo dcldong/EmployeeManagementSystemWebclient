@@ -71,11 +71,17 @@ const DepartmentPage: React.FC<Props> = (props) => {
                 type: 'multiple',
             }}
             request={async (params = {}, sort, filter) => {
-                const config = {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-                };
-                const result = await axios.get("/api/v1/departments", config);
-                return Promise.resolve(result.data);
+
+                try {
+                    const config = {
+                        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                    };
+                    const result = await axios.get("/api/v1/departments", config);
+                    return Promise.resolve(result.data);
+                } catch (error) {
+                    handleError(error)
+                }
+
             }}
             rowKey="id"
             search={false}

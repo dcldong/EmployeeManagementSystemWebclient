@@ -138,7 +138,7 @@ const ViewButton: React.FC<Props> = (props) => {
                                 "value": item.id
                             }
                         });
-                    }).catch(error => alert(error.message));
+                    }).catch(error => handleError(error));
                 }}
             />
             <ProFormText

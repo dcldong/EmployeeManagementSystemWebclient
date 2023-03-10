@@ -4,6 +4,7 @@ import DetailLayout from '../../layout/DetailLayout';
 import CreateButton from './CreateButton';
 import axios from 'axios';
 import ViewButton from './ViewButton';
+import { handleError } from '../../utils';
 
 
 interface Props {
@@ -97,17 +98,23 @@ const EmployeePage: React.FC<Props> = (props) => {
                 const config = {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
                 };
-                const totalNumberResult = await axios.post("/api/v1/employees/totalNumber", params, config);
-                const result = await axios.post("/api/v1/employees", params, config);
-                // return Promise.resolve(result.data);
-                return {
-                    data: result.data.data,
-                    // success 请返回 true，
-                    // 不然 table 会停止解析数据，即使有数据
-                    success: true,
-                    // 不传会使用 data 的长度，如果是分页一定要传
-                    total: totalNumberResult.data.data.totalNumber,
-                };
+                try {
+                    const totalNumberResult = await axios.post("/api/v1/employees/totalNumber", params, config);
+                    const result = await axios.post("/api/v1/employees", params, config);
+                    // return Promise.resolve(result.data);
+                    return {
+                        data: result.data.data,
+                        // success 请返回 true，
+                        // 不然 table 会停止解析数据，即使有数据
+                        success: true,
+                        // 不传会使用 data 的长度，如果是分页一定要传
+                        total: totalNumberResult.data.data.totalNumber,
+                    };
+                } catch (error: any) {
+                    handleError(error);
+                    throw error;
+                }
+
             }}
             rowKey="id"
             search={{ labelWidth: 'auto' }}

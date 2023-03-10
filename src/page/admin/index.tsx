@@ -4,6 +4,7 @@ import DetailLayout from '../../layout/DetailLayout';
 import CreateButton from './CreateButton';
 import ViewButton from './ViewButton';
 import axios from 'axios';
+import { handleError } from '../../utils';
 
 interface Props {
 }
@@ -69,7 +70,7 @@ const AdminPage: React.FC<Props> = (props) => {
                     console.log(result.data);
                     return Promise.resolve(result.data);
                 } catch (error: any) {
-                    alert(error.message);
+                    handleError(error);
                 }
             }}
             rowKey="id"
